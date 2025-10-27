@@ -1,0 +1,40 @@
+
+<zk>
+<hbox width="100%" height="100%" align="center" pack="center">
+<window width="80%" title="Login page" border="normal">
+	<vbox>
+	<textbox id="textUsername" ></textbox>
+	<separator/>
+	<textbox id="textPassword" type="password"></textbox>
+	<button onClick="validateUser()">Login</button><button>Reset</button>
+	<zscript>
+	<![CDATA[
+	import java.sql.*;
+	void validateUser(){
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://3306/test","root","root123");
+					PreparedStatement st = con.prepareStatement("select * from users where username=? and password=?");
+			st.setString(1,textUsername.getText());
+			st.setString(2,textPassword.getText());
+			ResultSet rs = st.executeQuery();
+			
+			if(rs.next()){
+				alert("Login Successful");
+			} else {
+				alert("Unauthorised User");
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+			alert(e.getMessage());
+		}
+	}
+	
+	]]>
+	
+	</zscript>
+	</vbox>
+</window>
+</hbox>
+
+</zk>

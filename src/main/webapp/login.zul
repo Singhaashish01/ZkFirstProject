@@ -1,0 +1,51 @@
+<?page title ="Login Page" contentType ="text/html;charset=UTF-8"?>
+<zk>
+<window title="LOGIN FORM" border="normal" width="300px" apply="com.bg.LoginDatabase">
+<label value = "USERNAME"/>
+<textbox id="Username"></textbox>
+<separator/>
+<label value = "PASSWORD"/>
+<textbox id="Password" type= "password"></textbox>
+<separator/>
+<button id ="login">Login</button> <space></space> <button onClick="resetUser()">Reset</button>
+<!-- <zscript>
+	<![CDATA[
+//	void validateUser(){
+//		if(Username.getText().equals("Priyanshu") && Password.getValue().equals("Pri@123")){
+//				alert("Login Successful");
+//		} else {
+//			alert("Unauthorized User");
+//		}
+//		
+//	}
+import java.sql.*;
+	void validateUser(){
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","root123");
+					PreparedStatement st = con.prepareStatement("select * from users where username=? and password=?");
+			st.setString(1,Username.getText());
+			st.setString(2,Password.getText());
+			ResultSet rs = st.executeQuery();
+			
+			if(rs.next()){
+				alert("Login Successful");
+			} else {
+				alert("Unauthorised User");
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+			alert(e.getMessage());
+		}
+	}
+	
+	
+	void resetUser(){
+		Username.setValue("");
+		Password.setValue(null);
+	}
+	]]>
+
+</zscript> -->
+</window>
+</zk>

@@ -1,0 +1,138 @@
+<zk>
+	<hbox height="100%" width="100%" align="center" pack="center">
+		<window title="Bank User Registration" border="normal" width="400px" >
+			<label value="BANK USER REGISTRATION FORM" style="font-weight:bold; font-size:14pt; color: #1a73e8;" />
+			<separator />
+			
+			<label value="Full Name: " width="120px" />
+			<textbox id="fullName" placeholder="Enter Your Full Name" />
+			<separator />
+
+			<label value="Date Of Birth: " width="120px"/>
+			<datebox id="dateofbirth"/>
+			<separator/>
+
+			<label value="Email: " width="120px" />
+			<textbox id="email" placeholder="Enter Your Email" />
+			<separator />
+
+			<label value="Phone Number: " width="120px" />
+			<textbox id="phone" placeholder="Enter Your Phone Number" />
+			<separator />
+
+			<label value="Username: " width="120px" />
+			<textbox id="username" placeholder="Enter Your Username" />
+			<separator />
+
+			<label value="Password: " width="120px" />
+			<textbox id="password" type="password" placeholder="Enter Your Password" />
+			<separator />
+
+			<label value="Confirm Password: " width="120px" />
+			<textbox id="confirmPassword" type="password" placeholder="Type Password Again" />
+			<separator />
+
+			<label value="Gender: " width="120px"/>
+			<hbox>
+				<radiogroup id="gender">
+					<radio label="Male" />
+					<radio label="Female" />
+					<radio label="Other" />
+				</radiogroup>
+			</hbox>
+			<separator/>
+
+			<label value="Account Type: " width="120px"/>
+			<combobox id="accountType" placeholder="Select Account Type">
+				<comboitem label="Savings" />
+				<comboitem label="Current" />
+				<comboitem label="Business" />
+			</combobox>
+			<separator/>
+
+			<label value="Captcha: " width="120px"/>
+			<hbox>
+				<label id="captchaLabel" value="" style="font-weight:bold; font-size:12pt; color:green;" />
+				<textbox id="captchaInput" placeholder="Enter Answer" width="100px" />
+				<button label="Refresh" onClick="generateCaptcha()" />
+			</hbox>
+			<separator/>
+
+			<hbox>
+				<checkbox id="terms" label="I agree to Terms &amp; Conditions" />
+			</hbox>
+			<separator/>
+
+			<hbox align="center" pack="center">
+				<button label="Register" onClick="registerUser()" />
+				<space></space>
+				<button label="Reset" onClick="resetForm()" />
+			</hbox>
+
+			<zscript>
+        <![CDATA[
+		int num1 = 0;
+		int num2 = 0;
+
+		void generateCaptcha() {
+			java.util.Random rand = new java.util.Random();
+			num1 = rand.nextInt(10) + 1;
+			num2 = rand.nextInt(10) + 1;
+			captchaLabel.setValue(num1 + " + " + num2 + " = ?");
+		}
+
+		void registerUser() {
+			if (fullName.getValue().isEmpty() || email.getValue().isEmpty() || phone.getValue().isEmpty()
+				|| username.getValue().isEmpty() || password.getValue().isEmpty()
+				|| confirmPassword.getValue().isEmpty() || gender.getSelectedItem() == null
+				|| accountType.getSelectedItem() == null || captchaInput.getValue().isEmpty()
+				|| !terms.isChecked()) {
+				alert("Please fill all fields and accept Terms &amp; Conditions!");
+				return;
+			}
+
+			if (!password.getValue().equals(confirmPassword.getValue())) {
+				alert("Passwords do not match!");
+				return;
+			}
+
+			int captchaAnswer;
+			try {
+				captchaAnswer = Integer.parseInt(captchaInput.getValue());
+			} catch (Exception e) {
+				alert("Captcha must be a number!");
+				return;
+			}
+
+			if (captchaAnswer != num1 + num2) {
+				alert("Captcha is incorrect!");
+				generateCaptcha();
+				return;
+			}
+
+			alert("Registration successful for: " + fullName.getValue() + "\nGender: " + gender.getSelectedItem().getLabel()
+				+ "\nAccount Type: " + accountType.getSelectedItem().getLabel());
+		}
+
+		void resetForm() {
+			fullName.setValue("");
+			dateofbirth.setValue(null);
+			email.setValue("");
+			phone.setValue("");
+			username.setValue("");
+			password.setValue("");
+			confirmPassword.setValue("");
+			gender.setSelectedIndex(-1);
+			accountType.setSelectedIndex(-1);
+			captchaInput.setValue("");
+			terms.setChecked(false);
+			generateCaptcha();
+		}
+
+		// Initialize captcha on load
+		generateCaptcha();
+	]]>
+			</zscript>
+		</window>
+	</hbox>
+</zk>

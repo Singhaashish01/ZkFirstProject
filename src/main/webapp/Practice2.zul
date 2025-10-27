@@ -1,0 +1,220 @@
+<?page title ="Multi-Function Clock" contentType ="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Multi-Function Clock" border="normal" width="450px" closable="true">
+		<tabbox>
+			<tabs>
+				<tab label="Clock"/>
+				<tab label="Alarm"/>
+				<tab label="Timer"/>
+				<tab label="Stopwatch"/>
+				<tab label="World Clock"/>
+			</tabs>
+
+			<tabpanels>
+				<!-- CLOCK TAB -->
+				<tabpanel>
+					<vbox align="center">
+						<label id="clockLabel" value="00:00:00" style="font-size:24px;"/>
+						<label id="dateLabel" value="Wednesday, 22 Oct 2025" style="font-size:16px;"/>
+					</vbox>
+				</tabpanel>
+
+				<!-- ALARM TAB -->
+				<tabpanel>
+					<vbox>
+						<label value="Set Alarm (HH:MM:SS):"/>
+						<textbox id="alarmInput" placeholder="e.g. 15:45:00"/>
+						<button label="Set Alarm" onClick="setAlarm();"/>
+						<label id="alarmStatus" value="No alarm set"/>
+					</vbox>
+				</tabpanel>
+
+				<!-- TIMER TAB -->
+				<tabpanel>
+					<vbox>
+						<label value="Set Timer (seconds):"/>
+						<intbox id="timerInput"/>
+						<button label="Start Timer" onClick="startTimer();"/>
+						<label id="timerLabel" value="Timer: 0s"/>
+					</vbox>
+				</tabpanel>
+
+				<!-- STOPWATCH TAB -->
+				<tabpanel>
+					<vbox>
+						<label id="stopwatchLabel" value="00:00:00.000" style="font-size:18px;"/>
+						<hbox>
+							<button label="Start" onClick="startStopwatch();"/>
+							<button label="Stop" onClick="stopStopwatch();"/>
+							<button label="Reset" onClick="resetStopwatch();"/>
+						</hbox>
+						<vbox id="lapsBox"/>
+					</vbox>
+				</tabpanel>
+
+				<!-- WORLD CLOCK TAB -->
+				<tabpanel>
+					<vbox>
+						<label id="indiaLabel" value="India: --:--:--"/>
+						<label id="nyLabel" value="New York: --:--:--"/>
+						<label id="lonLabel" value="London: --:--:--"/>
+						<label id="tokyoLabel" value="Tokyo: --:--:--"/>
+					</vbox>
+				</tabpanel>
+			</tabpanels>
+		</tabbox>
+
+		<!-- Beep sound -->
+		<audio id="beepSound" src="https://audio-previews.elements.envatousercontent.com/files/286545509/preview.mp3" preload="auto"></audio>
+
+		<!-- Timers -->
+		<timer id="updateTimer" delay="1000" repeats="true" onTimer="updateClocks();"/>
+		<timer id="stopwatchTimer" delay="100" repeats="true" onTimer="updateStopwatch();"/>
+	</window>
+
+	<!-- ===================== ZSCRIPT SECTION ===================== -->
+	<zscript><![CDATA[
+	import java.text.SimpleDateFormat;
+	import java.text.DecimalFormat;
+	import java.util.*;
+	import org.zkoss.zk.ui.util.Clients;
+	import java.time.*;
+
+	SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	SimpleDateFormat sdfWithMs = new SimpleDateFormat("HH:mm:ss.SSS");
+	SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMM yyyy");
+	DecimalFormat df2 = new DecimalFormat("00");
+	DecimalFormat df3 = new DecimalFormat("000");
+
+	String alarmTime = null;
+	int remainingTime = 0;
+	boolean stopwatchRunning = false;
+	long stopwatchStart = 0;
+	long stopwatchElapsed = 0;
+
+	void updateClocks() {
+		Label clockLabel = (Label) self.getFellowIfAny("clockLabel");
+		Label dateLabel = (Label) self.getFellowIfAny("dateLabel");
+		Label nyLabel = (Label) self.getFellowIfAny("nyLabel");
+		Label lonLabel = (Label) self.getFellowIfAny("lonLabel");
+		Label tokyoLabel = (Label) self.getFellowIfAny("tokyoLabel");
+		Label indiaLabel = (Label) self.getFellowIfAny("indiaLabel");
+		Label timerLabel = (Label) self.getFellowIfAny("timerLabel");
+		Label alarmStatus = (Label) self.getFellowIfAny("alarmStatus");
+
+		Date now = new Date();
+		if (clockLabel != null)
+			clockLabel.setValue(sdf.format(now));
+		if (dateLabel != null)
+			dateLabel.setValue(dateFormat.format(now));
+
+		java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss");
+
+		// World clocks (accurate using time zones)
+		ZonedDateTime india = ZonedDateTime.now(ZoneId.of("Asia/Kolkata"));
+		ZonedDateTime ny = ZonedDateTime.now(ZoneId.of("America/New_York"));
+		ZonedDateTime lon = ZonedDateTime.now(ZoneId.of("Europe/London"));
+		ZonedDateTime tokyo = ZonedDateTime.now(ZoneId.of("Asia/Tokyo"));
+
+		if (indiaLabel != null)
+		    indiaLabel.setValue("India: " + india.format(formatter));
+		if (nyLabel != null)
+		    nyLabel.setValue("New York: " + ny.format(formatter));
+		if (lonLabel != null)
+		    lonLabel.setValue("London: " + lon.format(formatter));
+		if (tokyoLabel != null)
+		    tokyoLabel.setValue("Tokyo: " + tokyo.format(formatter));
+
+		// Alarm check
+		if (alarmTime != null && sdf.format(now).equals(alarmTime)) {
+			alert("⏰ Alarm Time!");
+			playBeep();
+			alarmTime = null;
+			if (alarmStatus != null)
+				alarmStatus.setValue("Alarm Triggered!");
+		}
+
+		// Timer countdown
+		if (remainingTime > 0) {
+			remainingTime--;
+			if (timerLabel != null)
+				timerLabel.setValue("Timer: " + remainingTime + "s");
+			if (remainingTime == 0) {
+				alert("⏲ Timer Done!");
+				playBeep();
+			}
+		}
+	}
+
+	void updateStopwatch() {
+		if (stopwatchRunning) {
+			long nowMs = System.currentTimeMillis();
+			long total = stopwatchElapsed + (nowMs - stopwatchStart);
+			long sec = total / 1000;
+			long ms = total % 1000;
+			long hr = sec / 3600;
+			long min = (sec % 3600) / 60;
+			long s = sec % 60;
+			String formatted = df2.format(hr) + ":" + df2.format(min) + ":" + df2.format(s) + "." + df3.format(ms);
+			Label stopwatchLabel = (Label) self.getFellowIfAny("stopwatchLabel");
+			if (stopwatchLabel != null)
+				stopwatchLabel.setValue(formatted);
+		}
+	}
+
+	void setAlarm() {
+		Textbox alarmInput = (Textbox) self.getFellow("alarmInput");
+		Label alarmStatus = (Label) self.getFellow("alarmStatus");
+		String val = alarmInput.getValue();
+		if (val == null || val.trim().equals("")) {
+			alert("Please enter a valid time!");
+			return;
+		}
+		alarmTime = val.trim();
+		alarmStatus.setValue("Alarm set for " + alarmTime);
+	}
+
+	void startTimer() {
+		Intbox timerInput = (Intbox) self.getFellow("timerInput");
+		Label timerLabel = (Label) self.getFellow("timerLabel");
+		Integer val = timerInput.getValue();
+		if (val == null || val <= 0) {
+			alert("Enter valid seconds!");
+			return;
+		}
+		remainingTime = val;
+		timerLabel.setValue("Timer: " + remainingTime + "s");
+	}
+
+	void startStopwatch() {
+		if (!stopwatchRunning) {
+			stopwatchRunning = true;
+			stopwatchStart = System.currentTimeMillis();
+		}
+	}
+
+	void stopStopwatch() {
+		if (stopwatchRunning) {
+			stopwatchRunning = false;
+			stopwatchElapsed += System.currentTimeMillis() - stopwatchStart;
+			Vbox lapsBox = (Vbox) self.getFellow("lapsBox");
+			Label stopwatchLabel = (Label) self.getFellow("stopwatchLabel");
+			Label lap = new Label("Lap: " + stopwatchLabel.getValue());
+			lapsBox.appendChild(lap);
+		}
+	}
+
+	void resetStopwatch() {
+		stopwatchRunning = false;
+		stopwatchElapsed = 0;
+		Label stopwatchLabel = (Label) self.getFellow("stopwatchLabel");
+		Vbox lapsBox = (Vbox) self.getFellow("lapsBox");
+		stopwatchLabel.setValue("00:00:00.000");
+		lapsBox.getChildren().clear();
+	}
+
+	void playBeep() {
+		Clients.evalJavaScript("document.getElementById('beepSound').play()");
+	}
+	]]></zscript>
+</zk>

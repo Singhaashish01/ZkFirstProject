@@ -1,0 +1,16 @@
+<?page title ="Toolbar" contentType ="text/html;charset=UTF-8"?>
+<zk>
+<panel id="panel" title="ZK Desktop" border="normal" width="100%">
+		<panelchildren id = "panelchildren">
+		  <image src="/images/Home.png"/>
+		</panelchildren>
+	<toolbar id="toolb" align="start">
+		<toolbarbutton image="/images/Instagram.png" onClick='alert("Instagram")'/>
+		<toolbarbutton image="/images/WhatsApp.png" onClick='alert("Whatsup")'/>
+		<toolbarbutton image="/images/Video.png" onClick='alert("Video")'/>
+		<toolbarbutton image="/images/Music.png" onClick='alert("Music")'/>
+		<toolbarbutton image="/images/Message.png" onClick='alert("Message")'/>
+	</toolbar>
+
+</panel>
+</zk>

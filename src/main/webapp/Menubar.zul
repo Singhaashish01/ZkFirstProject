@@ -1,0 +1,10 @@
+<?page title ="Menubar" contentType ="text/html;charset=UTF-8"?>
+<zk>
+<window title="MenuBar Page" border="normal" width="100%">
+<button popup="options">Save</button>
+<menupopup id="options">
+	<menuitem label="Save"/>
+	<menuitem label="Save As"/>
+</menupopup>
+</window>
+</zk>

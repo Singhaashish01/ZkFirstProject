@@ -1,0 +1,40 @@
+<?page title="Calculator" contentType="text/html;charset=UTF-8"?>
+
+<zk>
+	<hbox height="100%" width="100%" align="center" pack="center">
+		<window title="Calculator" border="normal" width="300px" apply="com.bg.CalculatorMain">
+			<textbox id="display" width="260px" />
+			<separator />
+			<vbox>
+				<hbox spacing="10px">
+					<button label="C" height="40px" width="110px" />
+					<button label="%" height="40px" width="50px" />
+					<button label="/" height="40px" width="50px" />
+				</hbox>
+				<hbox spacing="10px">
+					<button label="7" height="40px" width="50px" />
+					<button label="8" height="40px" width="50px" />
+					<button label="9" height="40px" width="50px" />
+					<button label="*" height="40px" width="50px" />
+				</hbox>
+				<hbox spacing="10px">
+					<button label="4" height="40px" width="50px" />
+					<button label="5" height="40px" width="50px" />
+					<button label="6" height="40px" width="50px" />
+					<button label="-" height="40px" width="50px" />
+				</hbox>
+				<hbox spacing="10px">
+					<button label="1" height="40px" width="50px" />
+					<button label="2" height="40px" width="50px" />
+					<button label="3" height="40px" width="50px" />
+					<button label="+" height="40px" width="50px" />
+				</hbox>
+				<hbox spacing="10px">
+					<button label="0" height="40px" width="50px" />
+					<button label="⌫" height="40px" width="50px" />
+					<button label="=" height="40px" width="110px" />
+				</hbox>
+			</vbox>
+		</window>
+	</hbox>
+</zk>

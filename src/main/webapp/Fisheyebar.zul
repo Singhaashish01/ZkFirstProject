@@ -1,0 +1,15 @@
+<?page title ="Toolbar" contentType ="text/html;charset=UTF-8"?>
+<zk>
+<window>
+<checkbox label="Vertical orient" onCheck='fsb.orient=self.checked?"vertical":"horizontal"'/>
+<separator bar="true"/>
+<fisheyebar id="fsb" style="position:absolute;margin:80px 150px; background-color:blue" attachEdge="center" itemWidth="40" itemHeight="40" itemMaxHeight="160" itemMaxWidth="160">
+<fisheye image="/images/Home.png" label=""/>
+<fisheye image="/images/Instagram.png" label=""/>
+<fisheye image="/images/WhatsApp.png" label=""/>
+<fisheye image="/images/Video.png" label=""/>
+<fisheye image="/images/Music.png" label=""/>
+<fisheye image="/images/Message.png" label=""/>
+</fisheyebar>
+</window>
+</zk>

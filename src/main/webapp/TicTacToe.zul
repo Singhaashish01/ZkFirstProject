@@ -1,0 +1,23 @@
+<?page title ="Tic tac toe" contentType ="text/html;charset=UTF-8"?>
+
+<zk>
+	<hbox height="100%" width="100%" align="center" pack="center">
+	<window title="Tic Tac Toe " border="normal" width="100%" apply="com.bg.TicTacToe">
+		<button id="b1"  width="80px" height="80px"></button>
+		<button id="b2"  width="80px" height="80px"></button>
+		<button id="b3"  width="80px" height="80px"></button>
+		<separator />
+		<button id="b4"  width="80px" height="80px"></button>
+		<button id="b5"  width="80px" height="80px"></button>
+		<button id="b6"  width="80px" height="80px"></button>
+		<separator />
+		<button id="b7"  width="80px" height="80px"></button>
+		<button id="b8"  width="80px" height="80px"></button>
+		<button id="b9"  width="80px" height="80px"></button>
+<!-- 		<separator/>
+		<button label="Reset" onClick="resetGame()" width="250px"/> -->
+
+	</window>
+
+</hbox>
+</zk>

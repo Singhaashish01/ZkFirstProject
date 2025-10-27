@@ -1,0 +1,9 @@
+<?page title="Auto Generated index.zul"?>
+<window title="Hello World!!" border="normal" width="100%"  style="background-color: red; color: white; padding: 20px; border-radius: 10px; text-align: center; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">
+
+<label value="You are using: ${desktop.webApp.version}"/>
+
+
+
+
+</window>

@@ -1,0 +1,14 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window title="Student List" border="normal" width="500px" apply="com.bg.StudentComposer">
+
+        <listbox id="studentList" rows="5">
+            <listhead>
+                <listheader label="ID" width="60px" />
+                <listheader label="Name" width="160px" />
+                <listheader label="Department" width="160px" />
+            </listhead>
+        </listbox>
+
+    </window>
+</zk>

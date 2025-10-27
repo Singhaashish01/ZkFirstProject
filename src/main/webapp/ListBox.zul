@@ -1,0 +1,43 @@
+<?page title ="Toolbar" contentType ="text/html;charset=UTF-8"?>
+<zk>
+	<window title="Search" border="normal" width="600px" apply="com.bg.ListBoxComposer">
+<!-- 		<zscript>
+<![CDATA[
+	String[] fruits = new String[] { "Apple", "Mango", "Orange", "Papaya", "Guava" };
+	String[][] fruitPrice = new String[][] { { "Apple", "100" }, { "Mango", "80" }, { "Orange", "60" },
+			{ "Papaya", "60" }, { "Guava", "30" } };
+	ListModelArray lma = new ListModelArray(fruitPrice);
+	ArrayList fruitList = new ArrayList();
+	fruitList.add("Banana");
+	ListModelList lml = new ListModelList(fruitList);
+]]>
+</zscript> -->
+		<hbox>
+			
+			<listbox id="lb1" model="${lml}">
+				<listhead>
+					<listheader label="item" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell>${each[0]}</listcell>
+					</listitem>
+				</template>
+			</listbox>
+			
+			
+			<listbox id="lb2" model="${lma}">
+				<listhead>
+					<listheader label="item" />
+					<listheader label="itemPrice" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell>${each [0]}</listcell>
+						<listcell>${each [1]}</listcell>
+					</listitem>
+				</template>
+			</listbox>
+		</hbox>
+	</window>
+</zk>

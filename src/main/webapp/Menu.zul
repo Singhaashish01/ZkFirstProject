@@ -1,0 +1,17 @@
+<window width="100%" title="Menubar" border="normal">
+<menubar id="menubar">
+    <menu label="File">
+        <menupopup>
+                 <menu label="Add New File">
+                <menupopup>
+                	<menuitem label="Open"/>
+                    <menuitem label="Save"/>
+                    <menuitem label="Save As"/>
+                </menupopup>
+            </menu>
+            <menuseparator />
+            <menuitem label="Exit"/>
+        </menupopup>
+    </menu>
+</menubar>
+</window>
