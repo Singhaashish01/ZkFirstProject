@@ -1,15 +1,12 @@
+<?page title ="Toolbar" contentType ="text/html;charset=UTF-8"?>
 <zk>
 	<hbox height="100%" width="100%" align="center" pack="center">
-		<window title="Bank User Registration" border="normal"
-			apply="com.bg.RegistrationComposerListBox">
-			<label value="BANK USER REGISTRATION FORM"
-				style="font-weight:bold;" />
-			<separator />
+		<window title="User Form" border="normal" width="500px">
 			<label value="Full Name: " width="120px" />
-			<textbox id="name" placeholder="Enter Your First Name" />
+			<textbox id="fullName" placeholder="Enter Your First Name" />
 			<separator />
 			<label value="Date Of Birth " width="120px" />
-			<datebox id="dob" />
+			<datebox id="dateofbirth" />
 			<separator />
 			<label value="Email: " width="120px" />
 			<textbox id="email" placeholder="Enter Your Email" />
@@ -21,13 +18,15 @@
 			<textbox id="username" placeholder="Enter Your Username" />
 			<separator />
 			<label value="Password: " width="120px" />
-			<textbox id="password" type="password"
-				placeholder="Enter Your Password" />
+			<textbox id="password" placeholder="Enter Your Password" />
 			<separator />
-			<button id="registerBtn" label="Register " />
+			<label value="Confirm Password: " width="120px" />
+			<textbox id="confirmPassword" type="password"
+				placeholder="Type Password Again" />
+			<separator />
+			<button label="Register " onClick="registerUser()" />
 			<space></space>
-			<button id="resetBtn" label="Reset" />
-
+			<button label="Reset" onClick="resetForm()" />
 		</window>
 	</hbox>
 </zk>

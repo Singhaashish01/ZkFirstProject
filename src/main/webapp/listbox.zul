@@ -1,0 +1,28 @@
+<?page title ="Toolbar" contentType ="text/html;charset=UTF-8"?>
+<zk>
+	<hbox height="100%" width="100%" align="center" pack="center">
+		<window title="User Data" border="normal" apply="com.bg.ListBoxJDBCComposer">
+			<listbox id="listbox" emptyMessage="No data">
+				<listhead>
+					<listheader label="Id" />
+					<listheader label="Name" />
+					<listheader label="DOB" />
+					<listheader label="Email" />
+					<listheader label="Phone" />
+					<listheader label="Username" />
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${each[0]}"/>
+						<listcell label="${each[1]}"/>
+						<listcell label="${each[2]}"/>
+						<listcell label="${each[3]}"/>
+						<listcell label="${each[4]}"/>
+						<listcell label="${each[5]}"/>
+					</listitem>
+				</template>
+			</listbox>
+
+		</window>
+	</hbox>
+</zk>

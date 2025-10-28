@@ -1,0 +1,36 @@
+<?page title ="MobileList" contentType ="text/html;charset=UTF-8"?>
+<zk>
+	<window title="MobileList" border="normal" width="100%"
+		apply="com.operation.MobileComposer">
+		<textbox id="tsearchbox" />
+		<button id="bSearch">Search</button>
+		<hbox>
+
+			<listbox id="Itemlist" emptyMessage="No data is available"
+				rows="5"  hflex="2">
+				<listhead>
+					<listheader label="ID" sort="auto"/>
+					<listheader label="Brand" sort="auto"/>
+					<listheader label="Model" sort="auto"/>
+				</listhead>
+				<template name="model">
+					<listitem>
+						<listcell label="${each.id}" />
+						<listcell label="${each.brand}" />
+						<listcell label="${each.model}" />
+					</listitem>
+				</template>
+			</listbox>
+			<vbox 
+				style="display:flex; justify-content:center; align-item:center;"
+				hflex="1">
+				<image id="img" height="200px" />
+				<label id="l1"></label>
+				<label id="l2"></label>
+				<label id="l3"></label>
+				<label id="l4"></label>
+				<label id="l5"></label>
+			</vbox>
+		</hbox>
+	</window>
+</zk>
