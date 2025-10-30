@@ -1,4 +1,4 @@
-package com.operation;
+package com.operation.model;
 
 public class Mobile {
 	
@@ -77,6 +77,11 @@ public class Mobile {
 	}
 	
 	
+	public Mobile() {
+		super();
+	}
+
+
 	public Mobile(int id, String brand, String model, double price, String description, String image) {
 		super();
 		this.id = id;

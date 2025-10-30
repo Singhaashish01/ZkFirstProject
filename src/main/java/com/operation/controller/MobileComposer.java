@@ -1,4 +1,4 @@
-package com.operation;
+package com.operation.controller;
 
 import java.util.List;
 import org.zkoss.zk.ui.select.SelectorComposer;
@@ -12,6 +12,10 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
+
+import com.operation.dao.MobileServiceImplements;
+import com.operation.model.Mobile;
+
 import org.zkoss.zul.Messagebox;
 
 public class MobileComposer extends SelectorComposer<Window> {
@@ -26,16 +30,24 @@ public class MobileComposer extends SelectorComposer<Window> {
     private Image img;
 
     @Wire
-    private Textbox tsearchbox;
+    private Textbox tsearchbox, tBrand, tModel, tPrice, tDisc, tImage;
 
   
     private MobileServiceImplements mobileService = new MobileServiceImplements();
 
+    @Override
+    public void doAfterCompose(Window comp) throws Exception {
+    	
+    	super.doAfterCompose(comp);
+    	
+    }
 
-    @Listen("onCreate = #Itemlist")
+    private ListModelList lml;
+   @Listen("onClick = #Itemlist")
     public void loadAllMobiles() {
         List<Mobile> list = mobileService.findAllMobile();
-        Itemlist.setModel(new ListModelList<>(list));
+        lml = new ListModelList(list);
+        Itemlist.setModel(lml);
     }
 
     @Listen("onClick = #bSearch")
@@ -85,5 +97,31 @@ public class MobileComposer extends SelectorComposer<Window> {
 
 
         }
+    }
+    
+    @Listen("onClick=#bSave")
+    public void addMobiles() {
+    	
+//    	String brand = tBrand.getValue().trim();
+//    	String model = tModel.getValue().trim();
+//    	
+//    	if( brand.isEmpty() || model.isEmpty()) {
+//    		Messagebox.show("");
+//    		return;
+//    	}
+   
+    	Mobile m = new Mobile();
+    	m.setBrand(tBrand.getValue());
+    	m.setModel(tModel.getValue());
+    	m.setPrice(Double.parseDouble(tPrice.getValue()));
+    	m.setDescription(tDisc.getValue());
+    	m.setImage(tImage.getValue());
+    	mobileService.saveMobile(m);
+    	if (lml != null) {
+    		lml.add(m);
+    	}
+    	
+    	
+    	Messagebox.show("Mobile added successfully");
     }
 }

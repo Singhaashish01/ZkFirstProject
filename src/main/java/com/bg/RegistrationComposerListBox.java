@@ -14,7 +14,7 @@ import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-import com.bg.dbutil.DBConnection;
+import com.bg.dbconnection.DBConnection;
 
 public class RegistrationComposerListBox extends SelectorComposer<Window> {
 

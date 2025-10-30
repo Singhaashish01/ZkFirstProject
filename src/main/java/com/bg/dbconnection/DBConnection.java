@@ -1,4 +1,4 @@
-package com.bg.dbutil;
+package com.bg.dbconnection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

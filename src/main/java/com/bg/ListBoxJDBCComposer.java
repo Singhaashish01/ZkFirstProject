@@ -11,7 +11,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Window;
 
-import com.bg.dbutil.DBConnection;
+import com.bg.dbconnection.DBConnection;
 
 public class ListBoxJDBCComposer  extends SelectorComposer<Window>{
 

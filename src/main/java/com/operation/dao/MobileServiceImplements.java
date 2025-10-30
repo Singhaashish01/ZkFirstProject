@@ -1,6 +1,7 @@
-package com.operation;
+package com.operation.dao;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,7 +9,8 @@ import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bg.dbutil.DBConnection;
+import com.bg.dbconnection.DBConnection;
+import com.operation.model.Mobile;
 
 public class MobileServiceImplements implements MobileService {
 
@@ -77,6 +79,25 @@ public class MobileServiceImplements implements MobileService {
             return mobile;
         }
         return null;
+    }
+    
+    public void saveMobile(Mobile m) {
+    	String query = "INSERT INTO mobile(brand,model,price,description,image)VALUES(?,?,?,?,?)";
+    	try {
+    		
+    		Connection conn = DBConnection.getConnection();
+    		PreparedStatement pstmt = conn.prepareStatement(query);
+    		
+    		pstmt.setString(1, m.getBrand());
+    		pstmt.setString(2, m.getModel());
+    		pstmt.setDouble(3, m.getPrice());
+    		pstmt.setString(4, m.getDescription());
+    		pstmt.setString(5, m.getImage());
+    		pstmt.execute();
+    	} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
     }
 
     @Override

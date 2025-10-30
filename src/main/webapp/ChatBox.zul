@@ -1,0 +1,24 @@
+<?page title ="Chatbox" contentType ="text/html;charset=UTF-8"?>
+<zk>
+	<window style="overflow:auto" title="ChatBox" border="normal"
+		height="100%" apply="com.bg.ChatboxComposer">
+		<borderlayout height="100%">
+			<center hflex="2">
+				<vbox id="vbox" />
+			</center>
+			<south>
+				<hbox>
+					<inputgroup>
+						Username
+						<textbox id="uName" />
+					</inputgroup>
+					<inputgroup>
+						Message
+						<textbox id="sendMessage" />
+					</inputgroup>
+					<button id="b1">Send</button>
+				</hbox>
+			</south>
+		</borderlayout>
+	</window>
+</zk>

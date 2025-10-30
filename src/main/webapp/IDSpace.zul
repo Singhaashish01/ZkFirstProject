@@ -1,0 +1,18 @@
+<?page title ="IDSpace" contentType ="text/html;charset=UTF-8"?>
+<zk>
+<window id="w1" width="100%" border="normal" apply="com.bg.IDSpaceComposer">
+<button id="b1">Click</button>
+<button id="b2">Save</button>
+<button id="b3">Save</button>
+<button id="b4">Open</button>
+<div>
+<button id="b5">SaveAs</button>
+</div>
+<window id="w2">
+<button id="b1">Click</button>
+<button id="b2">Save</button>
+<button id="b3">Save</button>
+<button id="b4">ClickS</button>
+</window>
+</window>
+</zk>
