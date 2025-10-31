@@ -10,7 +10,7 @@
 				<hbox>
 					<inputgroup>
 						Username
-						<textbox id="uName" />
+						<textbox id="uName" readonly="true"/>
 					</inputgroup>
 					<inputgroup>
 						Message

@@ -1,6 +1,7 @@
 package com.bg;
 
 
+
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.event.EventQueue;
@@ -25,6 +26,8 @@ public class ChatboxComposer extends SelectorComposer<Window>{
 	public void doAfterCompose(Window comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
+		String host = java.net.InetAddress.getLocalHost().getHostName();
+		uName.setValue(host);
 		EventQueue<Event> eQue = EventQueues.lookup("chat", EventQueues.APPLICATION, true);
 		eQue.subscribe(new EventListener<Event>() {
 			
@@ -35,6 +38,12 @@ public class ChatboxComposer extends SelectorComposer<Window>{
 			}
 		});
 	}
+	
+//	@Subscribe(value="queue", scope = EventQueues.APPLICATION)
+//	public void receive(Event e1) {
+//		Object data = e1.getData();
+//		alert((String)data);
+//	}
 	
 	@Listen("onClick=#b1")
 	public void send() {

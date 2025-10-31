@@ -1,29 +1,33 @@
 <?page title="Tic Tac Toe" contentType="text/html;charset=UTF-8"?>
 <zk>
-    <window title="Tic Tac Toe" border="normal" width="400px"
-            apply="com.bg.TicTacToeEventComposer">
+<hbox height="100%" width="100%" align="center" pack="center">
+	<window title="Tic Tac Toe" border="normal" width="400px"
+		apply="com.bg.TicTacToeEventComposer">
 
-        <vbox align="center" spacing="10px">
-            <label id="status" style="font-weight:bold;" />
-            <grid>
-                <rows>
-                    <row>
-                        <button id="cell0" width="80px" height="80px" />
-                        <button id="cell1" width="80px" height="80px" />
-                        <button id="cell2" width="80px" height="80px" />
-                    </row>
-                    <row>
-                        <button id="cell3" width="80px" height="80px" />
-                        <button id="cell4" width="80px" height="80px" />
-                        <button id="cell5" width="80px" height="80px" />
-                    </row>
-                    <row>
-                        <button id="cell6" width="80px" height="80px" />
-                        <button id="cell7" width="80px" height="80px" />
-                        <button id="cell8" width="80px" height="80px" />
-                    </row>
-                </rows>
-            </grid>
-        </vbox>
-    </window>
+		<vbox align="center" spacing="10px">
+			<label id="status" style="font-weight:bold;" />
+			<grid>
+				<rows>
+					<row>
+						<button id="cell0" width="80px" height="80px" />
+						<button id="cell1" width="80px" height="80px" />
+						<button id="cell2" width="80px" height="80px" />
+					</row>
+					<row>
+						<button id="cell3" width="80px" height="80px" />
+						<button id="cell4" width="80px" height="80px" />
+						<button id="cell5" width="80px" height="80px" />
+					</row>
+					<row>
+						<button id="cell6" width="80px" height="80px" />
+						<button id="cell7" width="80px" height="80px" />
+						<button id="cell8" width="80px" height="80px" />
+					</row>
+				</rows>
+			</grid>
+			<button label="Restart" width="100px"
+				id="resetBtn" />
+		</vbox>
+	</window>
+	</hbox>
 </zk>
