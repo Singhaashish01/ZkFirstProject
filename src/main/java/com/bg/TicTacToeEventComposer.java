@@ -11,6 +11,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Label;
+import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
 /**
@@ -25,10 +26,20 @@ public class TicTacToeEventComposer extends SelectorComposer<Window> {
     @Wire 
     private Label status;
     
+    @Wire
+    private Textbox txtBoxOTP;
+    
+    @Wire
+    private Button btnOtp;
+    
     
     private static boolean xTurn = true;
     private static boolean gameOver = false;
     private static final String[] board = new String[9];
+ // === OTP and Player Management ===
+    private static String sharedOTP = null;
+    private static int playerCount = 0;
+    private boolean isVerified = false;
 
     // Shared application-level queue
     private static EventQueue<Event> gameQueue;
@@ -113,7 +124,7 @@ public class TicTacToeEventComposer extends SelectorComposer<Window> {
         if (!btn.getLabel().isEmpty()) return; 
 
         btn.setLabel(symbol);
-        btn.setStyle("color: " + ("X".equals(symbol) ? "#1976d2;" : "#e53935;"));
+        btn.setStyle("color: " + ("X".equals(symbol) ? "#196d2;" : "#e53935;"));
         board[index] = symbol;
 
         if (checkWinner(symbol)) {
@@ -197,6 +208,67 @@ public class TicTacToeEventComposer extends SelectorComposer<Window> {
             case 8: return cell8;
             default: return null;
         }
+    }
+    
+    
+    @Listen("onClick = #btnOtp")
+    public void onOtpSubmit() {
+        String enterOtp = txtBoxOTP.getValue().trim();
+        if (enterOtp.isEmpty()) {
+            Clients.showNotification("Please enter OTP", "warning", null, "middle_center", 2000);
+            return;
+        }
+
+        // If already 2 players are verified
+        if (playerCount >= 2 && !isVerified) {
+            Clients.showNotification("Game room is full! Try later.", "error", null, "middle_center", 3000);
+            return;
+        }
+
+        // First player sets the shared OTP
+        if (sharedOTP == null) {
+            sharedOTP = enterOtp;
+            isVerified = true;
+            playerCount++;
+            Clients.showNotification("OTP accepted! Waiting for another player...", "info", null, "middle_center", 2500);
+            disableGameBoard();
+            return;
+        }
+
+        // Second player enters OTP
+        if (sharedOTP.equals(enterOtp)) {
+            isVerified = true;
+            playerCount++;
+            Clients.showNotification("✅ Both players verified! Game starting...", "info", null, "middle_center", 2500);
+            enableGameBoard();
+            publishReset(); // Start a fresh game
+        } else {
+            Clients.showNotification("❌ Invalid OTP! Please enter correct one.", "error", null, "middle_center", 3000);
+        }
+    }
+
+    // Disable board until OTP verified
+    private void disableGameBoard() {
+        for (int i = 0; i < 9; i++) {
+            Button b = getButton(i);
+            if (b != null) b.setDisabled(true);
+        }
+        status.setValue("Waiting for second player to verify OTP...");
+    }
+
+    // Enable board once verified
+    private void enableGameBoard() {
+        for (int i = 0; i < 9; i++) {
+            Button b = getButton(i);
+            if (b != null) b.setDisabled(false);
+        }
+        status.setValue("Player X's turn");
+    }
+
+    // Optional: Reset game room manually if needed (when restarting everything)
+    private static void resetGameRoom() {
+        sharedOTP = null;
+        playerCount = 0;
     }
 
     /** simple serializable move object */

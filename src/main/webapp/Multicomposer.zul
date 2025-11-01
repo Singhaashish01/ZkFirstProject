@@ -1,0 +1,15 @@
+<?page title ="Toolbar" contentType ="text/html;charset=UTF-8"?>
+<zk>
+<window title="SelectorComposer">
+<button id="btn1" label="B!">B1</button>
+<button id="btn2" label="B*">B@</button>
+<button id="btn3" label="B#">B$</button>
+<button id="btn4" label="B$">B#</button>
+</window>
+<window title="Composer" >
+<button id="b1" label="B!">B1</button>
+<button id="b2" label="B*">B@</button>
+<button id="b3" label="B#">B$</button>
+<button id="b4" label="B$">B#</button>
+</window>
+</zk>
